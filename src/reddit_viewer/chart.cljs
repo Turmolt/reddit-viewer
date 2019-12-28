@@ -1,6 +1,7 @@
 (ns reddit-viewer.chart
   (:require ["chart.js" :as chartjs]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            [re-frame.core :as rf]))
 
 (defn render-data-chart [node data]
   (chartjs/Chart.
@@ -21,19 +22,21 @@
     (.destroy @chart)
     (reset! chart nil)))
 
-(defn render-chart [chart data]
+(defn render-chart [chart]
   (fn [component]
-    (when (not-empty @data)
-      (let [node (r/dom-node component)]
-        (destroy-chart chart)
-        (reset! chart (render-data-chart node @data))))))
+    (when-let [posts @(rf/subscribe [:posts])]
+      (destroy-chart chart)
+      (reset! chart (render-data-chart (r/dom-node component) posts)))))
 
-(defn chart-posts-by-votes [data]
+(defn render-canvas []
+  (when @(rf/subscribe [:posts]) [:canvas]))
+
+(defn chart-posts-by-votes []
   (let [chart (r/atom nil)]
     (r/create-class
-     {:component-did-mount (render-chart chart data)
-      :component-did-update (render-chart chart data)
+     {:component-did-mount (render-chart chart)
+      :component-did-update (render-chart chart)
       :component-will-unmount (fn [_] (destroy-chart chart))
-      :render                 (fn [] (when @data [:canvas]))})))
+      :render                 render-canvas})))
 
 
