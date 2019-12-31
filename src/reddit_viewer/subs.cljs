@@ -20,3 +20,8 @@
  :post-count
  (fn [db _]
    (:post-count db)))
+
+(rf/reg-sub
+ :search-val
+ (fn [db _]
+   (:search-val db)))

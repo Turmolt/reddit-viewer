@@ -8,10 +8,11 @@
    {:view      :posts
     :sort-key  :score
     :subreddit "Aww"
+    :search-val "Aww"
     :post-count 30}))
 
 (defn find-posts-with-preview [posts]
-  (filter #(= (:post_hint %) "image") posts))
+  (filter #(not (= (:post_hint %) "image")) posts))
 
 (def trim-event
   (rf/->interceptor
@@ -26,8 +27,7 @@
  (fn [db [posts]]
    (assoc db :posts
           (->> (get-in posts [:data :children])
-               (map :data)
-               (find-posts-with-preview)))))
+               (map :data)))))
 
 (rf/reg-event-db
  :set-subreddit
@@ -40,6 +40,12 @@
  [trim-event]
  (fn [db [n]]
    (assoc db :post-count n)))
+
+(rf/reg-event-db
+ :set-search-val
+ [trim-event]
+ (fn [db [search-val]]
+   (assoc db :search-val search-val)))
 
 (rf/reg-fx
  :ajax-get

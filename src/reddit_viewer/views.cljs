@@ -14,7 +14,8 @@
 
 (defn search-bar []
   (let [subreddit @(rf/subscribe [:subreddit])
-        n @(rf/subscribe [:post-count])]
+        n @(rf/subscribe [:post-count])
+        search-val @(rf/subscribe [:search-val])]
     [:form.form-inline.my-2.my-lg-0
      [:select
       {:class "form-control"
@@ -26,17 +27,24 @@
       {:type "Search"
        :placeholder "Aww"
        :aria-label "Search"
-       :on-change #(rf/dispatch [:set-subreddit  (-> % .-target .-value)])}]
+       :on-change #(rf/dispatch [:set-search-val  (-> % .-target .-value)])
+       :onSubmit #(do (if (not (= search-val subreddit))
+                        (do (rf/dispatch [:set-subreddit search-val])
+                            (rf/dispatch [:set-posts nil])))
+                      (rf/dispatch [:load-posts search-val n]))}]
      [:button.btn.btn-outline-success.my-2.my-sm-0
       {:type "button"
-       :on-click #(do (rf/dispatch [:set-posts nil])
-                      (rf/dispatch [:load-posts subreddit n]))} "Enter"]]))
+       :on-click #(do (if (not (= search-val subreddit))
+                        (do (rf/dispatch [:set-subreddit search-val])
+                            (rf/dispatch [:set-posts nil])))
+                      (rf/dispatch [:load-posts search-val n]))} "Enter"]]))
 
 (defn navbar [view]
   [:nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark
    [:ul.navbar-nav.mr-auto.nav
     {:className "navbar-nav mr-auto"}
-    [:img {:src "/reddit-viewer/public/resources/BackwardsCaptainLogoLight.png" :width 30 :height 30 :style {:margin "auto"}}]
+    [:img {:src "/reddit-viewer/public/resources/BackwardsCaptainLogoLight.png"
+           :width 30 :height 30 :style {:margin "auto"}}]
     [:div {:style {:width 10}}]
     [navitem "Posts" view :posts]
     [navitem "Chart" view :chart]]
