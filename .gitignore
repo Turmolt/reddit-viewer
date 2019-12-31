@@ -8,7 +8,6 @@ classes/
 checkouts/
 cljs-runtime/
 !src/main/shadow/js
-css/
 !packages/launcher/web/css
 /public/assets
 /wiki
