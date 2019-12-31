@@ -1,7 +1,7 @@
 (ns reddit-viewer.reddit
   (:require [re-frame.core :as rf]))
 
-(defn trim-title [title] (str (subs title 0 180) "..."))
+(defn trim-title [title] (str (subs title 0 180) (if (> (count title) 180) "..." "")))
 
 (defn display-post [{:keys [permalink subreddit title score url post_hint thumbnail]}]
   [:a {:href (str "http://www.reddit.com" permalink) :height 100}
