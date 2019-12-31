@@ -35,7 +35,7 @@
   [:nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark
    [:ul.navbar-nav.mr-auto.nav
     {:className "navbar-nav mr-auto"}
-    [:img {:src "/resources/BackwardsCaptainLogoLight.png" :width 30 :height 30 :style {:margin "auto"}}]
+    [:img {:src "/reddit-viewer/public/resources/BackwardsCaptainLogoLight.png" :width 30 :height 30 :style {:margin "auto"}}]
     [:div {:style {:width 10}}]
     [navitem "Posts" view :posts]
     [navitem "Chart" view :chart]]
