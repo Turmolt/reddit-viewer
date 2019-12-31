@@ -21,7 +21,11 @@
         (for [post posts-row]
           ^{::key post}
           [display-post post])])]
-    [:div {:style {:padding 100}}[:h (str "Loading...")]]))
+    [:div {:style {:padding 100}}
+     [:img {:src "/reddit-viewer/public/resources/BackwardsCaptainLogo.png"
+            :width 100 :height 100
+            :style {:margin "auto"
+                    :animation "rotation 4s infinite linear"}}]]))
 
 (defn sort-posts [title sort-key]
   [:button.btn.btn-secondary
