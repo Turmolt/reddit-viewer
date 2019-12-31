@@ -28,7 +28,8 @@
        :placeholder "Aww"
        :aria-label "Search"
        :on-change #(rf/dispatch [:set-search-val  (-> % .-target .-value)])
-       :onSearch (fn [e] (do (println "aww") (.preventDefault e)))}]
+       :onSubmit (fn [e] (do (.preventDefault e)
+                             (identity false)))}]
      [:button.btn.btn-outline-success.my-2.my-sm-0
       {:type "button"
        :on-click #(do (if (not (= search-val subreddit))
