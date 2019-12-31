@@ -22,14 +22,13 @@
        :id "numberPosts"
        :on-change #(rf/dispatch [:set-post-count  (-> % .-target .-value)])}
       [:option 30] [:option 50] [:option 100]]
-     [:div {:style {:padding-right 5}}]
-     [:a {:href "#"} 
-      [:input.form-control.mr-sm-2
-       {:type "Search"
-        :placeholder "Aww"
-        :aria-label "Search"
-        :on-change #(rf/dispatch [:set-search-val  (-> % .-target .-value)])
-        :onSubmit (fn [e] (identity false))}]]
+     [:div {:style {:padding-right 5}}] 
+     [:input.form-control.mr-sm-2
+      {:type "text"
+       :placeholder "Aww"
+       :aria-label "Search"
+       :on-change #(rf/dispatch [:set-search-val  (-> % .-target .-value)])
+       :onSearch (fn [e] (do (println "aww") (.preventDefault e)))}]
      [:button.btn.btn-outline-success.my-2.my-sm-0
       {:type "button"
        :on-click #(do (if (not (= search-val subreddit))
