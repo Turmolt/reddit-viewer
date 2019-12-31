@@ -28,8 +28,8 @@
        :aria-label "Search"
        :on-change #(rf/dispatch [:set-subreddit  (-> % .-target .-value)])}]
      [:button.btn.btn-outline-success.my-2.my-sm-0
-      {:type "submit"
-       :href "#"
+      {:a {:href "#"}
+       :type "submit"
        :on-click #(rf/dispatch [:load-posts subreddit n])} "Enter"]]))
 
 (defn navbar [view]
