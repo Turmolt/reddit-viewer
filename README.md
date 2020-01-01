@@ -1,4 +1,4 @@
-[View it live!](https://turmolt.github.io/reddit-viewer/)
+[View it live!](https://turmolt.github.io/reddit-viewer/#)
 
 Following a shadow-cljs workshop:
 https://github.com/ClojureTO/JS-Workshop/tree/shadow-cljs
