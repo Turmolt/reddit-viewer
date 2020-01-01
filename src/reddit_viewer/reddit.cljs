@@ -15,7 +15,7 @@
                               :justify-content "center"
                               :align-items "center"}}
      (case post_hint
-       "image" [:img {:width "300px" :src url :style {:object-fit "scale-down" :margin "auto"}}]
+       "image" [:img {:width "300px" :height "400px" :src url :style {:object-fit "scale-down" :margin "auto"}}]
        (if (some #(= % thumbnail) ["self" "default"])
          [:div {:style {:font-size  30}} (str thumbnail " post")]
          [:div {:style {:width "300px" :margin "auto"}}
