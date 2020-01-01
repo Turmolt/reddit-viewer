@@ -25,21 +25,19 @@
      [:div {:style {:padding-right 5}}] 
      [:form {:method "POST"
              :name "search"
-             :on-submit (fn [_] (identity false))
+             :on-submit (fn [e] (.preventDefault e))
              :on-change #(rf/dispatch [:set-search-val  (-> % .-target .-value)])}
       [:input.form-control.mr-sm-2
        {:type "text"
         :placeholder "Aww"
         :aria-label "Search"
-        :on-change #(rf/dispatch [:set-search-val  (-> % .-target .-value)])
-        :on-submit (fn [e] (do (.preventDefault e)
-                              (identity false)))}]]
-     [:button.btn.btn-outline-success.my-2.my-sm-0
-      {:type "button"
-       :on-click #(do (if (not (= search-val subreddit))
-                        (do (rf/dispatch [:set-subreddit search-val])
-                            (rf/dispatch [:set-posts nil])))
-                      (rf/dispatch [:load-posts search-val n]))} "Enter"]]))
+        :on-change #(rf/dispatch [:set-search-val  (-> % .-target .-value)])}]
+      [:button.btn.btn-outline-success.my-2.my-sm-0
+       {:type "button"
+        :on-click #(do (if (not (= search-val subreddit))
+                         (do (rf/dispatch [:set-subreddit search-val])
+                             (rf/dispatch [:set-posts nil])))
+                       (rf/dispatch [:load-posts search-val n]))} "Enter"]]]))
 
 (defn navbar [view]
   [:nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark
