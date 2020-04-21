@@ -1,5 +1,8 @@
 [View it live!](https://turmolt.github.io/reddit-viewer/#)
 
+A ClojureScript application for browsing Reddit.
+It was made mainly to explore shadow-cljs as a work environment.
+
 ### Development mode
 ```
 npm install
